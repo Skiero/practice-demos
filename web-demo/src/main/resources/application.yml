@@ -1,0 +1,11 @@
+server:
+  #  服务端口
+  port: 8080
+  servlet:
+    #    servlet上下文路径，必须以/开头，且不能以/结尾
+    context-path: /hik
+
+spring:
+  profiles:
+    #    当前激活的配置文件是 application-dev.yml，dev环境为spring boot-auto config，pro环境为customize config
+    active: dev
