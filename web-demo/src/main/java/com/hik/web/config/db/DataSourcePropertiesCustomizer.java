@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2020/8/19 10:41
  */
 @ConfigurationProperties(prefix = "spring.datasource")
-public class DruidDataSourceProperties {
+public class DataSourcePropertiesCustomizer {
     private String driverClassName;
     private String url;
     private String username;
