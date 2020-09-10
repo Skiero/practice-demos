@@ -6,9 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hik.web.constant.RedisConstant;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -25,13 +27,27 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @date 2020/8/18 14:23
  */
 @Configuration
-@EnableConfigurationProperties(RedisProperties.class)
+@EnableConfigurationProperties(RedisPropertiesCustomizer.class)
 public class RedisConfiguration {
 
-    private final RedisProperties redisProperties;
+    private final RedisPropertiesCustomizer redisProperties;
 
-    public RedisConfiguration(RedisProperties redisProperties) {
+    public RedisConfiguration(RedisPropertiesCustomizer redisProperties) {
         this.redisProperties = redisProperties;
+    }
+
+    /**
+     * spring boot auto config redis，创建LettuceConnectionFactory时使用RedisProperties的配置，如果配置中涉及敏感信息，可以使用以下方式进行配置，仅需配置RedisProperties，后续自动配置会由spring boot完成
+     */
+    @Bean
+    @Primary
+    public RedisProperties redisProperties(RedisProperties redisProperties) {
+        // 配置中的敏感信息通过读取其他配置获取，切勿在yml中配置，否则会覆盖该处的配置
+        redisProperties.setDatabase(this.redisProperties.getDatabase());
+        redisProperties.setHost(this.redisProperties.getHost());
+        redisProperties.setPort(this.redisProperties.getPort());
+        redisProperties.setPassword(this.redisProperties.getPassword());
+        return redisProperties;
     }
 
     /**

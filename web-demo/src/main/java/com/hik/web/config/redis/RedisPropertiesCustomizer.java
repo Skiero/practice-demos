@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2020/8/18 16:35
  */
 @ConfigurationProperties(prefix = "spring.redis")
-public class RedisProperties {
+public class RedisPropertiesCustomizer {
     private int database = 0;
     private String host = "localhost";
     private int port = 6379;
