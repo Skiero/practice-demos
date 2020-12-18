@@ -1,0 +1,31 @@
+hik:
+  config:
+    service:
+      name: @name@
+      swagger: true
+      version: @version@
+
+mybatis-plus:
+  global-config:
+    banner: false
+    db-config:
+      id-type: input
+      table-prefix: tb_
+
+server:
+  port: 7500
+  servlet:
+    context-path: /@name@
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://127.0.0.1:5432/postgres?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: postgres
+    password: 123456
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    locale: zh_CN
+    time-zone: GMT+8
+  profiles:
+    active: dev
