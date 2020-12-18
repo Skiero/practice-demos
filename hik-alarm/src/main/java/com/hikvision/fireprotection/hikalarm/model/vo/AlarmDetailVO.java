@@ -6,11 +6,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * TODO
+ * 报警详情
  *
  * @author wangjinchang5
  * @date 2020/12/18 16:10
- * @since TODO
+ * @since 1.0.100
  */
 @Data
 public class AlarmDetailVO implements Serializable {

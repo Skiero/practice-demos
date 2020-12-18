@@ -1,7 +1,6 @@
 package com.hikvision.fireprotection.hikalarm.model.table;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.util.Date;
@@ -15,18 +14,29 @@ import java.util.Date;
  */
 @TableName(value = "tb_alarm_detail")
 @Data
-@ApiModel
 public class AlarmDetailTable {
+    /*** ID */
     private String id;
+    /*** 名称 */
     private String alarmName;
-    private Date alarmTime;
+    /*** 位置 */
     private String alarmPosition;
+    /*** 报警时间 */
+    private Date alarmTime;
+    /*** 车牌号 */
     private String carNum;
+    /*** 联系人 */
     private String contactName;
+    /*** 手机号码 */
     private String contactPhone;
+    /*** 通知状态：0=未通知；1=已通知；2=通知失败 */
     private char notifyStatus;
+    /*** 通知时间 */
     private Date notifyTime;
+    /*** 备注 */
     private String remark;
+    /*** 创建时间 */
     private Date createTime;
+    /*** 更新时间 */
     private Date updateTime;
 }

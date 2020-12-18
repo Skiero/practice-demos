@@ -17,16 +17,20 @@ import javax.validation.constraints.NotNull;
 public class AlarmPageQuery {
     /*** 当前页码 */
     @NotNull(message = "The pageNo cannot be empty.")
-    @Min(value = 1L, message = "The minimum pageNo is 1.")
+    @Min(value = 1L, message = "The minimum of pageNo is 1.")
     private Integer pageNo;
     /*** 页面大小 */
     @NotNull(message = "The pageSize cannot be empty.")
     @Range(min = 1L, max = 1000L, message = "The range of  pageSize  is 1-1000.")
     private Integer pageSize;
+    /*** 车牌号 */
+    private String carNum;
+    /*** 联系人 */
+    private String contactName;
     /*** 手机号码 */
     private String contactPhone;
     /*** 报警周期，单位是天 */
     @NotNull(message = "The alarmPeriod cannot be empty.")
-    @Range(min = 1, message = "The minimum period is 1.")
+    @Range(min = 1, message = "The minimum of period is 1.")
     private Long alarmPeriod;
 }

@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 /**
- * TODO
+ * 报警控制层
  *
  * @author wangjinchang5
- * @date 2020/12/18 16:58
- * @since TODO
+ * @date 2020/12/18 16:30
+ * @since 1.0.100
  */
 @Api(tags = "报警模块")
 @RestController
@@ -31,9 +31,8 @@ public class AlarmController {
 
     @ApiOperation(value = "分页查询报警信息", notes = "根据查询条件，分页查询报警信息")
     @PostMapping("/alarm_page")
-    public ServerResponse queryAlarmInfoPage(@Validated @RequestBody AlarmPageQuery query) {
+    public ServerResponse<PageData<AlarmDetailVO>> queryAlarmInfoPage(@Validated @RequestBody AlarmPageQuery query) {
         PageData<AlarmDetailVO> page = alarmService.queryAlarmDetailPage(query);
-        System.out.println(page);
-        return new ServerResponse();
+        return ServerResponse.success(page);
     }
 }

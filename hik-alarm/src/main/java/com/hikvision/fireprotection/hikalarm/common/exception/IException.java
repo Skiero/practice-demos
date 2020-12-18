@@ -8,7 +8,17 @@ package com.hikvision.fireprotection.hikalarm.common.exception;
  * @since 1.0.100
  */
 public interface IException {
+    /**
+     * 获取code
+     *
+     * @return code
+     */
     String getCode();
 
+    /**
+     * 获取message
+     *
+     * @return message
+     */
     String getMsg();
 }

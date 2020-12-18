@@ -2,17 +2,20 @@ package com.hikvision.fireprotection.hikalarm.model.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
- * TODO
+ * 分页数据
  *
  * @author wangjinchang5
  * @date 2020/12/18 17:30
- * @since TODO
+ * @since 1.0.100
  */
 @Data
-public class PageData<E> {
+public class PageData<E> implements Serializable {
+    private static final long serialVersionUID = -6020388282600445828L;
+
     /*** 当前页码 */
     private Integer pageNo;
     /*** 页面大小 */
@@ -29,5 +32,11 @@ public class PageData<E> {
         this.pageSize = pageSize;
         this.total = 0L;
         this.totalPage = 0L;
+    }
+
+    public PageData<E> setTotal(Long total, Long totalPage) {
+        this.total = total;
+        this.totalPage = totalPage;
+        return this;
     }
 }

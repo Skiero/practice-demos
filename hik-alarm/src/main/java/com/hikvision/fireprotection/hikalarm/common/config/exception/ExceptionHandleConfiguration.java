@@ -1,8 +1,9 @@
-package com.hikvision.fireprotection.hikalarm.common.config;
+package com.hikvision.fireprotection.hikalarm.common.config.exception;
 
 import com.hikvision.fireprotection.hikalarm.common.enums.BusinessExceptionEnum;
 import com.hikvision.fireprotection.hikalarm.common.exception.BusinessException;
 import com.hikvision.fireprotection.hikalarm.model.vo.ServerResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,27 +19,31 @@ import java.util.stream.Collectors;
  * @since 1.0.100
  */
 @RestControllerAdvice
+@Slf4j
 public class ExceptionHandleConfiguration {
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ServerResponse<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.error("The global exception handler caught a valid exception.", e);
         String defaultMessage = e.getBindingResult().getAllErrors().stream()
-                .map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(","));
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .collect(Collectors.joining(","));
         ServerResponse<?> serverResponse = new ServerResponse<>();
-        serverResponse.setCode(BusinessExceptionEnum.SYSTEM_ERROR.getCode());
+        serverResponse.setCode(BusinessExceptionEnum.INVALID_PARAMETER.getCode());
         serverResponse.setMsg(defaultMessage);
         return serverResponse;
     }
 
     @ExceptionHandler(value = BusinessException.class)
     public ServerResponse<?> handleBusinessException(BusinessException e) {
-        ServerResponse<?> serverResponse = new ServerResponse<>(e);
-        return serverResponse;
+        log.error("The global exception handler caught a business exception.", e);
+        return new ServerResponse<>(e);
     }
 
     @ExceptionHandler(value = Exception.class)
     public ServerResponse<?> handleException(Exception e) {
-        ServerResponse<?> serverResponse = new ServerResponse<>(BusinessExceptionEnum.SYSTEM_ERROR);
-        return serverResponse;
+        log.error("The global exception handler caught an exception.", e);
+        return new ServerResponse<>(BusinessExceptionEnum.SYSTEM_ERROR);
     }
+
 }

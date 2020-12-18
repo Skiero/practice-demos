@@ -1,8 +1,11 @@
 package com.hikvision.fireprotection.hikalarm.module.service;
 
+import com.hikvision.fireprotection.hikalarm.model.dto.HikAlarmDTO;
 import com.hikvision.fireprotection.hikalarm.model.request.AlarmPageQuery;
 import com.hikvision.fireprotection.hikalarm.model.vo.AlarmDetailVO;
 import com.hikvision.fireprotection.hikalarm.model.vo.PageData;
+
+import java.util.List;
 
 /**
  * 报警服务
@@ -14,4 +17,5 @@ import com.hikvision.fireprotection.hikalarm.model.vo.PageData;
 public interface AlarmService {
 
     PageData<AlarmDetailVO> queryAlarmDetailPage(AlarmPageQuery query);
+    void handleAlarmEvent(List<HikAlarmDTO> alarmDTOList);
 }

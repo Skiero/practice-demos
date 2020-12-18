@@ -2,16 +2,19 @@ package com.hikvision.fireprotection.hikalarm.module.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.common.collect.Lists;
+import com.hikvision.fireprotection.hikalarm.common.utils.MapperUtil;
+import com.hikvision.fireprotection.hikalarm.model.dto.HikAlarmDTO;
 import com.hikvision.fireprotection.hikalarm.model.request.AlarmPageQuery;
 import com.hikvision.fireprotection.hikalarm.model.table.AlarmDetailTable;
 import com.hikvision.fireprotection.hikalarm.model.vo.AlarmDetailVO;
 import com.hikvision.fireprotection.hikalarm.model.vo.PageData;
+import com.hikvision.fireprotection.hikalarm.model.vo.publicsecurity.CarNumResult;
+import com.hikvision.fireprotection.hikalarm.model.vo.publicsecurity.TextMsgResult;
 import com.hikvision.fireprotection.hikalarm.module.mapper.AlarmDetailMapper;
 import com.hikvision.fireprotection.hikalarm.module.service.AlarmService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,6 +32,7 @@ import java.util.List;
  * @since 1.0.100
  */
 @Service
+@Slf4j
 public class AlarmServiceImpl implements AlarmService {
     @Resource
     private AlarmDetailMapper alarmDetailMapper;
@@ -60,16 +64,37 @@ public class AlarmServiceImpl implements AlarmService {
         if (CollectionUtils.isEmpty(records)) {
             alarmDetailVOList = Collections.emptyList();
         } else {
-            alarmDetailVOList = Lists.newArrayListWithCapacity(records.size());
-            records.forEach(table -> {
-                AlarmDetailVO vo = new AlarmDetailVO();
-                BeanUtils.copyProperties(table, vo);
-                alarmDetailVOList.add(vo);
-            });
+            alarmDetailVOList = MapperUtil.tableConvertToVOList(records);
         }
 
-        pageData.setList(alarmDetailVOList);
+        pageData.setTotal(selectPage.getTotal(), selectPage.getPages())
+                .setList(alarmDetailVOList);
 
         return pageData;
+    }
+
+    @Override
+    public void handleAlarmEvent(List<HikAlarmDTO> alarmDTOList) {
+        if (CollectionUtils.isEmpty(alarmDTOList)) {
+            log.warn("");
+            return;
+        }
+
+        alarmDTOList.forEach(alarmDTO -> {
+            // 根据车牌号查询联系人
+            CarNumResult carNumResult = queryContactInformation(alarmDTO);
+            // 给联系人下发短信
+            TextMsgResult textMsgResult = sendTextMessage(alarmDTO);
+            // 将结果保存到数据库
+            alarmDetailMapper.insert(null);
+        });
+    }
+
+    private CarNumResult queryContactInformation(HikAlarmDTO alarmDTO) {
+        return new CarNumResult();
+    }
+
+    private TextMsgResult sendTextMessage(HikAlarmDTO alarmDTO) {
+        return new TextMsgResult();
     }
 }

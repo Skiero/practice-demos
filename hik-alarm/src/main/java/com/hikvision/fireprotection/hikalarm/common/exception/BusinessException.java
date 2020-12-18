@@ -8,6 +8,8 @@ package com.hikvision.fireprotection.hikalarm.common.exception;
  * @since 1.0.100
  */
 public class BusinessException extends RuntimeException implements IException {
+    private static final long serialVersionUID = -2552302020161876732L;
+
     private final IException iException;
 
     public BusinessException(IException iException) {

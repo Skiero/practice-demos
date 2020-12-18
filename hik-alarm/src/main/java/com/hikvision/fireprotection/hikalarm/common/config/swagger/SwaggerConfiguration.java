@@ -1,12 +1,10 @@
-package com.hikvision.fireprotection.hikalarm.common.config;
+package com.hikvision.fireprotection.hikalarm.common.config.swagger;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -59,25 +57,12 @@ public class SwaggerConfiguration {
                 ;
     }
 
-    @Bean
-    public WebMvcConfigurer webMvcConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addResourceHandlers(@SuppressWarnings("NullableProblems") ResourceHandlerRegistry registry) {
-                registry.addResourceHandler("swagger-ui.html").addResourceLocations(
-                        "classpath:/META-INF/resources/");
-                registry.addResourceHandler("/webjars/**").addResourceLocations(
-                        "classpath:/META-INF/resources/webjars/");
-            }
-        };
-    }
-
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title(name + "服务接口")
                 .description(name + "API接口描述")
                 .version(version)
-                .contact(new Contact("hik_developer", "", "hik_developer@hikvision.com.cn"))
+                .contact(new Contact("hikDeveloper", "", "hikDeveloper@hikvision.com.cn"))
                 .build();
     }
 

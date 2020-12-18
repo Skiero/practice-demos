@@ -10,10 +10,12 @@ import com.hikvision.fireprotection.hikalarm.common.exception.IException;
  * @since 1.0.100
  */
 public enum BusinessExceptionEnum implements IException {
-    /**
-     * 系统错误
-     */
-    SYSTEM_ERROR("10010", "System error"),
+    /*** 未知错误 */
+    UNEXPECTED_ERROR("10001", "unexpected error"),
+    /*** 系统错误 */
+    SYSTEM_ERROR("10002", "System error"),
+    /*** 非法参数 */
+    INVALID_PARAMETER("10003", "Invalid parameter"),
     ;
 
     BusinessExceptionEnum(String code, String msg) {
