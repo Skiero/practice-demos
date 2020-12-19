@@ -16,6 +16,7 @@ import java.io.Serializable;
 public class ServerResponse<D> implements Serializable {
     private static final long serialVersionUID = -8922777085732062419L;
     private transient final String successCode = "0";
+
     @Getter
     @Setter
     private String code;
@@ -26,7 +27,9 @@ public class ServerResponse<D> implements Serializable {
     @Setter
     private D data;
 
-    /* constructor */
+    /**
+     * constructor
+     */
     public ServerResponse() {
         this.code = successCode;
         this.msg = "success";
@@ -37,7 +40,9 @@ public class ServerResponse<D> implements Serializable {
         this.msg = iException.getMsg();
     }
 
-    /* method */
+    /**
+     * method
+     */
     public static <D> ServerResponse<D> success(D data) {
         ServerResponse<D> response = new ServerResponse<>();
         response.setData(data);
@@ -52,7 +57,9 @@ public class ServerResponse<D> implements Serializable {
         return successCode.equals(this.code);
     }
 
-    /* toString */
+    /**
+     * toString
+     */
     @Override
     public String toString() {
         return "ServerResponse{" +

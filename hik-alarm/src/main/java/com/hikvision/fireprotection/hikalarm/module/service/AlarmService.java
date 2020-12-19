@@ -17,5 +17,6 @@ import java.util.List;
 public interface AlarmService {
 
     PageData<AlarmDetailVO> queryAlarmDetailPage(AlarmPageQuery query);
+
     void handleAlarmEvent(List<HikAlarmDTO> alarmDTOList);
 }

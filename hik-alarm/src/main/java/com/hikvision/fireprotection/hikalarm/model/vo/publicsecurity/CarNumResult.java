@@ -1,7 +1,17 @@
 package com.hikvision.fireprotection.hikalarm.model.vo.publicsecurity;
 
+import lombok.Data;
+
 import java.util.List;
 
+/**
+ * 车牌号查询响应
+ *
+ * @author wangjinchang5
+ * @date 2020/12/18 23:00
+ * @since 1.0.100
+ */
+@Data
 public class CarNumResult {
     /*** 总数 */
     private String total;

@@ -1,5 +1,12 @@
 package com.hikvision.fireprotection.hikalarm.model.vo.publicsecurity;
 
+/**
+ * 短信发送响应
+ *
+ * @author wangjinchang5
+ * @date 2020/12/18 23:00
+ * @since 1.0.100
+ */
 public class TextMsgResult {
     /*** 业务类别：01=发短信；02=已发送短信查询；03=查询回复 */
     private String bizType;

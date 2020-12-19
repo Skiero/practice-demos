@@ -3,7 +3,15 @@ package com.hikvision.fireprotection.hikalarm.model.dto;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
+/**
+ * 海康报警报文
+ *
+ * @author wangjinchang5
+ * @date 2020/12/18 16:00
+ * @since 1.0.100
+ */
 @Data
 public class HikAlarmDTO implements Serializable {
     private static final long serialVersionUID = -7649845341179344246L;
@@ -14,7 +22,7 @@ public class HikAlarmDTO implements Serializable {
     /*** 报警位置 */
     private String alarmPosition;
     /*** 报警时间 */
-    private String alarmTime;
+    private Date alarmTime;
     /*** 报警类型 */
     private String alarmType;
     /*** 车牌号 */

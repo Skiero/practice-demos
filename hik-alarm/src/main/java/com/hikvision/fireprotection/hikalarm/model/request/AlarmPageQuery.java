@@ -2,9 +2,11 @@ package com.hikvision.fireprotection.hikalarm.model.request;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * 报警分页查询条件
@@ -21,7 +23,7 @@ public class AlarmPageQuery {
     private Integer pageNo;
     /*** 页面大小 */
     @NotNull(message = "The pageSize cannot be empty.")
-    @Range(min = 1L, max = 1000L, message = "The range of  pageSize  is 1-1000.")
+    @Range(min = 1L, max = 1000L, message = "The range of pageSize is 1-1000.")
     private Integer pageSize;
     /*** 车牌号 */
     private String carNum;
@@ -29,8 +31,9 @@ public class AlarmPageQuery {
     private String contactName;
     /*** 手机号码 */
     private String contactPhone;
-    /*** 报警周期，单位是天 */
-    @NotNull(message = "The alarmPeriod cannot be empty.")
-    @Range(min = 1, message = "The minimum of period is 1.")
-    private Long alarmPeriod;
+    /*** 报警起始时间 */
+    @DateTimeFormat()
+    private Date startTime;
+    /*** 报警结束时间 */
+    private Date endTime;
 }

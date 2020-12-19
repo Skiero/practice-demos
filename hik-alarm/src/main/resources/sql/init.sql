@@ -1,33 +1,22 @@
 begin;
-
-create table if not exists tb_alarm_detail
+create table web_demo.tb_alarm_detail
 (
-    id             varchar(64) not null, -- id
-    alarm_name     varchar(255) null,    -- 名称
-    alarm_position varchar(255) null,    -- 位置
-    alarm_time     timestamp null,       -- 发生时间
-    car_num        varchar(64) null,     -- 车牌号
-    contact_name   varchar(128) null,    -- 联系人
-    contact_phone  varchar(64) null,     -- 手机号码
-    create_time    timestamp null,       -- 创建时间
-    notify_status  bpchar(1) null,       -- 通知状态：0=未通知；1=已通知；2=通知失败
-    notify_time    timestamp null,       -- 通知时间
-    remark         varchar(255) null,    -- 备注
-    update_time    timestamp null,       -- 更新时间
-    constraint tb_alarm_detail_pkey primary key (id)
-);
-
-comment on column tb_alarm_detail.id is 'id';
-comment on column tb_alarm_detail.alarm_name is '名称';
-comment on column tb_alarm_detail.alarm_position is '位置';
-comment on column tb_alarm_detail.alarm_time is '发生时间';
-comment on column tb_alarm_detail.car_num is '车牌号';
-comment on column tb_alarm_detail.contact_name is '联系人';
-comment on column tb_alarm_detail.contact_phone is '手机号码';
-comment on column tb_alarm_detail.create_time is '创建时间';
-comment on column tb_alarm_detail.notify_status is '通知状态：0=未通知；1=已通知；2=通知失败';
-comment on column tb_alarm_detail.notify_time is '通知时间';
-comment on column tb_alarm_detail.remark is '备注';
-comment on column tb_alarm_detail.update_time is '更新时间';
+    id             mediumint auto_increment not null COMMENT '主键id',
+    alarm_id       varchar(100) not null COMMENT '原始报警id',
+    alarm_name     varchar(100) null COMMENT '报警名称',
+    alarm_position varchar(100) null COMMENT '报警位置',
+    alarm_time     TIMESTAMP null COMMENT '报警时间',
+    alarm_type     varchar(100) null COMMENT '报警类型',
+    car_num        varchar(100) not null COMMENT '车牌号',
+    contact_name   varchar(100) null COMMENT '联系人',
+    contact_phone  varchar(100) null COMMENT '手机号码',
+    notify_status  CHAR         not null COMMENT '通知状态：0=未通知；1=已通知；2=通知失败',
+    notify_time    TIMESTAMP null COMMENT '通知时间',
+    remark         varchar(100) null COMMENT '备注',
+    sensor_name    varchar(100) null COMMENT '通道名称',
+    create_time    TIMESTAMP null COMMENT '创建时间',
+    update_time    varchar(100) null COMMENT '更新时间',
+    constraint tb_alarm_detail_pk primary key (id)
+) ENGINE = InnoDB default CHARSET = utf8mb4 collate = utf8mb4_0900_ai_ci;
 
 commit;

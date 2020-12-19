@@ -1,10 +1,8 @@
 package com.hikvision.fireprotection.hikalarm.common.config.mvc;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -17,8 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class WebMvcConfiguration {
-    @Value("${server.servlet.context-path}")
-    private String contextPath;
 
     @Bean
     public WebMvcConfigurer webMvcConfigurer() {
@@ -29,19 +25,19 @@ public class WebMvcConfiguration {
                         "classpath:/META-INF/resources/");
                 registry.addResourceHandler("/webjars/**").addResourceLocations(
                         "classpath:/META-INF/resources/webjars/");
-            }
-        };
-    }
 
-    @Bean
-    public WebSecurityConfigurerAdapter webSecurityConfigurerAdapter() {
-        return new WebSecurityConfigurerAdapter() {
+                registry.addResourceHandler("index.html").addResourceLocations(
+                        "classpath:/resources/static/");
+                registry.addResourceHandler("/static/**").addResourceLocations(
+                        "classpath:/resources/static/");
+            }
+
             @Override
-            protected void configure(HttpSecurity http) throws Exception {
-                http.authorizeRequests()
-                        .mvcMatchers((contextPath + "/**")).permitAll()
-                        .anyRequest().authenticated()
-                        .and().csrf().disable();
+            public void addCorsMappings(@SuppressWarnings("NullableProblems") CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowCredentials(true)
+                        .allowedMethods("GET", "POST", "DELETE", "PUT", "OPTIONS")
+                        .maxAge(3600);
             }
         };
     }

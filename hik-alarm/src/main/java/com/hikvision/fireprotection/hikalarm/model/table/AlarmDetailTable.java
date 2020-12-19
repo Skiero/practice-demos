@@ -1,5 +1,7 @@
 package com.hikvision.fireprotection.hikalarm.model.table;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -16,13 +18,18 @@ import java.util.Date;
 @Data
 public class AlarmDetailTable {
     /*** ID */
-    private String id;
+    @TableId(type = IdType.AUTO)
+    private Integer id;
+    /*** 原始id */
+    private String alarmId;
     /*** 名称 */
     private String alarmName;
     /*** 位置 */
     private String alarmPosition;
     /*** 报警时间 */
     private Date alarmTime;
+    /*** 报警类型 */
+    private String alarmType;
     /*** 车牌号 */
     private String carNum;
     /*** 联系人 */
@@ -35,6 +42,8 @@ public class AlarmDetailTable {
     private Date notifyTime;
     /*** 备注 */
     private String remark;
+    /*** 通道名称 */
+    private String sensorName;
     /*** 创建时间 */
     private Date createTime;
     /*** 更新时间 */

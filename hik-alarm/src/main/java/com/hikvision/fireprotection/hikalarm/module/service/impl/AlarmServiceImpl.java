@@ -15,6 +15,7 @@ import com.hikvision.fireprotection.hikalarm.module.service.AlarmService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -42,22 +43,35 @@ public class AlarmServiceImpl implements AlarmService {
         PageData<AlarmDetailVO> pageData = new PageData<>(query.getPageNo(), query.getPageSize());
 
         QueryWrapper<AlarmDetailTable> queryWrapper = new QueryWrapper<>();
+        // 车牌号模糊查询
+        if (StringUtils.isNotEmpty(query.getCarNum())) {
+            queryWrapper.like("car_num", query.getContactPhone());
+        }
+        // 联系人模糊查询
+        if (StringUtils.isNotEmpty(query.getContactName())) {
+            queryWrapper.like("contact_name", query.getContactPhone());
+        }
+        // 手机号码模糊查询
         if (StringUtils.isNotEmpty(query.getContactPhone())) {
             queryWrapper.like("contact_phone", query.getContactPhone());
         }
 
-        Date startTime = Date.from(LocalDate.now()
-                .minusDays(query.getAlarmPeriod())
-                .atStartOfDay(ZoneId.systemDefault())
-                .toInstant());
-        Date endTime = new Date();
+        Date endTime = query.getEndTime() == null
+                ? new Date()
+                : query.getEndTime();
+
+        Date startTime = query.getStartTime() == null || query.getStartTime().after(endTime)
+                ? Date.from(
+                endTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+                        .minusMonths(1)
+                        .atStartOfDay(ZoneId.systemDefault())
+                        .toInstant())
+                : query.getStartTime();
+
         queryWrapper.between("alarm_time", startTime, endTime);
 
         Page<AlarmDetailTable> selectPage =
                 alarmDetailMapper.selectPage(new Page<>(query.getPageNo(), query.getPageSize()), queryWrapper);
-
-        pageData.setTotal(selectPage.getTotal());
-        pageData.setTotalPage(selectPage.getPages());
 
         List<AlarmDetailVO> alarmDetailVOList;
         List<AlarmDetailTable> records = selectPage.getRecords();
@@ -86,7 +100,10 @@ public class AlarmServiceImpl implements AlarmService {
             // 给联系人下发短信
             TextMsgResult textMsgResult = sendTextMessage(alarmDTO);
             // 将结果保存到数据库
-            alarmDetailMapper.insert(null);
+            AlarmDetailTable table = new AlarmDetailTable();
+            BeanUtils.copyProperties(alarmDTO, table);
+            table.setNotifyStatus('0');
+            alarmDetailMapper.insert(table);
         });
     }
 
