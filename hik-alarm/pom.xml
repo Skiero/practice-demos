@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.hikvision.fireprotection</groupId>
-    <artifactId>hik-alarm</artifactId>
+    <artifactId>alarm</artifactId>
     <version>1.0.100</version>
     <packaging>war</packaging>
     <name>alarm</name>
