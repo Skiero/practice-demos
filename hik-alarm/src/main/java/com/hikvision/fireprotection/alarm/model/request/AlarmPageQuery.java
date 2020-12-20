@@ -11,7 +11,7 @@ import java.util.Date;
  * 报警分页查询条件
  *
  * @author wangjinchang5
- * @date 2020/12/18 17:48
+ * @date 2020/12/18 18:00
  * @since 1.0.100
  */
 @Data

@@ -1,6 +1,11 @@
+hik:
+  config:
+    service:
+      swagger: true
+
 logging:
   level:
     com.hikvision.fireprotection.hikalarm: debug
   file:
     name: hik-alarm.log
-    path: ../../logs/@name@/
+    path: logs/@name@/

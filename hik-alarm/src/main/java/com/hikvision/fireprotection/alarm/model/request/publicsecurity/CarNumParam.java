@@ -1,5 +1,7 @@
 package com.hikvision.fireprotection.alarm.model.request.publicsecurity;
 
+import com.hikvision.fireprotection.alarm.common.config.param.PersonalInfo;
+import com.hikvision.fireprotection.alarm.common.config.param.ValidateInfo;
 import lombok.Data;
 
 import java.util.List;
@@ -20,14 +22,13 @@ public class CarNumParam {
     /*** 认证参数 */
     private Validate validate;
 
-    public CarNumParam() {
-    }
-
-    public CarNumParam(RealInfo realInfo, Validate validate) {
+    public CarNumParam(RealInfo realInfo, Required required, Validate validate) {
         this.realInfo = realInfo;
+        this.required = required;
         this.validate = validate;
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     @Data
     public static class RealInfo {
         /*** 调用人联系方式 */
@@ -44,6 +45,30 @@ public class CarNumParam {
         private String dyrip;
         /*** 调用人单位名称 */
         private String dyrdwmc;
+
+        public RealInfo() {
+        }
+
+        public RealInfo(String dyrlxfs, String dyrgmsfhm, String dyrdwbm, String dyyy,
+                        String dyrxm, String dyrip, String dyrdwmc) {
+            this.dyrlxfs = dyrlxfs;
+            this.dyrgmsfhm = dyrgmsfhm;
+            this.dyrdwbm = dyrdwbm;
+            this.dyyy = dyyy;
+            this.dyrxm = dyrxm;
+            this.dyrip = dyrip;
+            this.dyrdwmc = dyrdwmc;
+        }
+
+        public static RealInfo build(PersonalInfo personalInfo) {
+            return new RealInfo(personalInfo.getDyrlxfs(),
+                    personalInfo.getDyrgmsfhm(),
+                    personalInfo.getDyrdwbm(),
+                    personalInfo.getDyyy(),
+                    personalInfo.getDyrxm(),
+                    personalInfo.getDyrip(),
+                    personalInfo.getDyrdwmc());
+        }
     }
 
     @Data
@@ -54,8 +79,15 @@ public class CarNumParam {
         private String requiredItems;
         /*** 存放批量查询的字段，以key/value形式赋值 */
         private List<String> fields;
+
+        public Required(String cnt, String requiredItems, List<String> fields) {
+            this.cnt = cnt;
+            this.requiredItems = requiredItems;
+            this.fields = fields;
+        }
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     @Data
     public static class Validate {
         /*** 责任人姓名 */
@@ -78,5 +110,35 @@ public class CarNumParam {
         private String fwbh;
         /*** 责任人公民身份号码 */
         private String zrrgmsfhm;
+
+        public Validate() {
+        }
+
+        public Validate(String zrrxm, String zrrsjhm, String zrdw, String yymc, String fwmc,
+                        String yybh, String zrrjh, String zrdwmc, String fwbh, String zrrgmsfhm) {
+            this.zrrxm = zrrxm;
+            this.zrrsjhm = zrrsjhm;
+            this.zrdw = zrdw;
+            this.yymc = yymc;
+            this.fwmc = fwmc;
+            this.yybh = yybh;
+            this.zrrjh = zrrjh;
+            this.zrdwmc = zrdwmc;
+            this.fwbh = fwbh;
+            this.zrrgmsfhm = zrrgmsfhm;
+        }
+
+        public static Validate build(ValidateInfo validateInfo) {
+            return new Validate(validateInfo.getZrrxm(),
+                    validateInfo.getZrrsjhm(),
+                    validateInfo.getZrdw(),
+                    validateInfo.getYymc(),
+                    validateInfo.getFwmc(),
+                    validateInfo.getYybh(),
+                    validateInfo.getZrrjh(),
+                    validateInfo.getZrdwmc(),
+                    validateInfo.getFwbh(),
+                    validateInfo.getZrrgmsfhm());
+        }
     }
 }

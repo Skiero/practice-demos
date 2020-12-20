@@ -8,9 +8,13 @@ package com.hikvision.fireprotection.alarm.common.enums;
  * @since 1.0.100
  */
 public enum NotifyStatus {
+    /*** 已通知 */
     ALREADY_NOTIFIED(1, "已通知"),
+    /*** 未通知 */
     NOT_NOTIFIED(2, "未通知"),
+    /*** 通知失败 */
     FAILED_NOTIFIED(3, "通知失败"),
+    /*** 未知状态 */
     UNKNOWN_STATUS(0, "未知状态"),
     ;
 

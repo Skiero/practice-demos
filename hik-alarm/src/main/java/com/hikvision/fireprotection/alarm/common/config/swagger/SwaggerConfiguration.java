@@ -62,7 +62,7 @@ public class SwaggerConfiguration {
                 .title(name + "服务接口")
                 .description(name + "API接口描述")
                 .version(version)
-                .contact(new Contact("hikDeveloper", "", "hikDeveloper@hikvision.com.cn"))
+                .contact(new Contact("hikDeveloper", "", "hikDeveloper@hikvision.com"))
                 .build();
     }
 }

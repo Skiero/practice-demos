@@ -1,6 +1,5 @@
 package com.hikvision.fireprotection.alarm.module.controller;
 
-import com.google.common.collect.Lists;
 import com.hikvision.fireprotection.alarm.model.dto.AlarmEventDTO;
 import com.hikvision.fireprotection.alarm.model.request.AlarmPageQuery;
 import com.hikvision.fireprotection.alarm.model.vo.AlarmDetailVO;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
 
@@ -52,7 +52,6 @@ public class AlarmController {
         alarmEventDTO.setAlarmTime(new Date());
         alarmEventDTO.setAlarmType("通道占用");
         alarmEventDTO.setCarNum("浙A" + RandomUtils.nextInt(10000, 99999));
-        alarmService.handleAlarmEvent(Lists.newArrayList(alarmEventDTO));
+        alarmService.handleAlarmEvent(Collections.singletonList(alarmEventDTO));
     }
-
 }

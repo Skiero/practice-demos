@@ -3,9 +3,6 @@ package com.hikvision.fireprotection.alarm.common.utils;
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -41,11 +38,10 @@ public class MapperUtil {
                 .register();
 
         return mapperFactory.getMapperFacade().map(source, targetClazz);
-
     }
 
     public static <T, S> List<T> convertToList(Class<T> targetClazz, List<S> sourceList) {
-        if (CollectionUtils.isEmpty(sourceList)) {
+        if (sourceList == null || sourceList.isEmpty()) {
             return new ArrayList<>();
         }
         mapperFactory.classMap(targetClazz, sourceList.get(0).getClass())
@@ -55,7 +51,7 @@ public class MapperUtil {
         return mapperFactory.getMapperFacade().mapAsList(sourceList, targetClazz);
     }
 
-    public static Map<String, String> objectToMap(Object object) {
+    public static Map<String, String> convertToMap(Object object) {
         Map<String, String> map = new HashMap<>();
         Class<?> clazz = object.getClass();
         for (Field field : clazz.getDeclaredFields()) {

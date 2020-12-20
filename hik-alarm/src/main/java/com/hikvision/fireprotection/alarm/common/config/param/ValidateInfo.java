@@ -2,8 +2,14 @@ package com.hikvision.fireprotection.alarm.common.config.param;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
 
+/**
+ * 车牌号查询接口的责任人信息
+ *
+ * @author wangjinchang5
+ * @date 2020/12/20 16:00
+ * @since 1.0.100
+ */
 @ConfigurationProperties(prefix = "validate")
 @Data
 public class ValidateInfo {

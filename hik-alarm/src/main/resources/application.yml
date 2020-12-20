@@ -2,8 +2,8 @@ hik:
   config:
     service:
       name: @name@
-      swagger: true
       version: @version@
+
 mybatis-plus:
   global-config:
     banner: false
@@ -14,8 +14,7 @@ mybatis-plus:
 server:
   port: 7500
   servlet:
-    context-path: /alarm
-#    context-path: /@name@
+    context-path: /@build.finalName@
 
 spring:
   datasource:

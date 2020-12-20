@@ -17,6 +17,6 @@ create table if not exists tb_alarm_detail
     create_time    timestamp    null comment '创建时间',
     update_time    timestamp    null comment '更新时间',
     constraint tb_alarm_detail_pk primary key (id)
-) engine = InnoDB default charset = utf8mb4;
+) engine = InnoDB default charset = utf8mb4 collate = utf8mb4_0900_ai_ci;
 
 commit;

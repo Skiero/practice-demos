@@ -45,5 +45,4 @@ public class ExceptionHandleConfiguration {
         log.error("The global exception handler caught an exception.", e);
         return new ServerResponse<>(BusinessExceptionEnum.SYSTEM_ERROR);
     }
-
 }

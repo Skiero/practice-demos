@@ -17,7 +17,6 @@ import com.hikvision.fireprotection.alarm.model.request.publicsecurity.CarNumPar
 import com.hikvision.fireprotection.alarm.model.table.AlarmDetailTable;
 import com.hikvision.fireprotection.alarm.model.vo.AlarmDetailVO;
 import com.hikvision.fireprotection.alarm.model.vo.PageData;
-import com.hikvision.fireprotection.alarm.model.vo.publicsecurity.CarNumInfo;
 import com.hikvision.fireprotection.alarm.model.vo.publicsecurity.CarNumResult;
 import com.hikvision.fireprotection.alarm.model.request.publicsecurity.TextMsgParam;
 import com.hikvision.fireprotection.alarm.model.vo.publicsecurity.TextMsgResult;
@@ -49,8 +48,8 @@ import java.util.Map;
 @EnableConfigurationProperties({PersonalInfo.class, ValidateInfo.class})
 @Slf4j
 public class AlarmServiceImpl implements AlarmService {
-    private PersonalInfo personalInfo;
-    private ValidateInfo validateInfo;
+    private final PersonalInfo personalInfo;
+    private final ValidateInfo validateInfo;
 
     @Autowired
     public AlarmServiceImpl(PersonalInfo personalInfo, ValidateInfo validateInfo) {
@@ -108,6 +107,7 @@ public class AlarmServiceImpl implements AlarmService {
             alarmDetailVOList = MapperUtil.convertToList(AlarmDetailVO.class, records);
             alarmDetailVOList.forEach(vo -> {
                 vo.setNotifyStatus(NotifyStatus.getMsgByCode(Integer.valueOf(vo.getNotifyStatus())));
+                //todo
                 vo.setContactPhone(vo.getContactPhone().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
             });
         }
@@ -124,12 +124,12 @@ public class AlarmServiceImpl implements AlarmService {
             return;
         }
 
-        System.err.println("开始处理--"+System.currentTimeMillis());
+        System.err.println("开始处理--" + System.currentTimeMillis());
 
         // 1 将报警事件入库
         List<AlarmDetailTable> alarmDetailTables = MapperUtil.convertToList(AlarmDetailTable.class, alarmEventDTOList);
 
-        System.err.println("完成映射--"+System.currentTimeMillis());
+        System.err.println("完成映射--" + System.currentTimeMillis());
 
         alarmDetailTables.forEach(table -> {
             table.setNotifyStatus(NotifyStatus.NOT_NOTIFIED.code);
@@ -138,28 +138,28 @@ public class AlarmServiceImpl implements AlarmService {
         // 2 阅后即焚
         // TODO
 
-        System.err.println("完成入库--"+System.currentTimeMillis());
+        System.err.println("完成入库--" + System.currentTimeMillis());
 
         // 3 处理事件
         alarmDetailTables.forEach(table -> {
             // 3.1 查询联系人
 
-            System.err.println("查询信息--"+System.currentTimeMillis());
+            System.err.println("查询信息--" + System.currentTimeMillis());
 
             CarNumResult carNumResult = queryContactInformation(table.getCarNum());
 
-            System.err.println("查询结束--"+System.currentTimeMillis());
+            System.err.println("查询结束--" + System.currentTimeMillis());
 
 
             table.setContactName("hik-" + RandomUtils.nextInt(1000, 9999));
             table.setContactPhone(RandomUtils.nextLong(15000000000L, 18999999999L) + "");
 
-            System.err.println("发送短信--"+System.currentTimeMillis());
+            System.err.println("发送短信--" + System.currentTimeMillis());
 
             // 3.2 发送短信
             TextMsgResult textMsgResult = sendTextMessage(table.getContactPhone(), "测试短信");
 
-            System.err.println("发送结束--"+System.currentTimeMillis());
+            System.err.println("发送结束--" + System.currentTimeMillis());
             if (CommonConstant.SUCCESS_CODE.equals(textMsgResult.getResponseCode())) {
                 // 发送成功
                 table.setNotifyStatus(NotifyStatus.ALREADY_NOTIFIED.code);
@@ -173,18 +173,18 @@ public class AlarmServiceImpl implements AlarmService {
             table.setNotifyStatus(RandomUtils.nextInt(0, 3));
             table.setNotifyTime(new Date());
 
-            System.err.println("开始更新--"+System.currentTimeMillis());
+            System.err.println("开始更新--" + System.currentTimeMillis());
             // 3.3 更新短信通知状态
             alarmDetailMapper.updateById(table);
         });
 
-        System.err.println("一切结束--"+System.currentTimeMillis());
+        System.err.println("一切结束--" + System.currentTimeMillis());
     }
 
     private CarNumResult queryContactInformation(String carNum) {
-        CarNumParam.RealInfo realInfo = MapperUtil.convertToObject(CarNumParam.RealInfo.class, personalInfo);
-        CarNumParam.Validate validate = MapperUtil.convertToObject(CarNumParam.Validate.class, validateInfo);
-        CarNumParam carNumParam = new CarNumParam(realInfo, validate);
+        CarNumParam.RealInfo realInfo = CarNumParam.RealInfo.build(personalInfo);
+        CarNumParam.Validate validate = CarNumParam.Validate.build(validateInfo);
+        CarNumParam carNumParam = new CarNumParam(realInfo, null, validate);
         String response = HttpUtil.executePost(UrlConstant.VEHICLE_INFORMATION,
                 JSONObject.toJSONString(carNumParam), null);
 
@@ -199,7 +199,7 @@ public class AlarmServiceImpl implements AlarmService {
         textMsgParam.setPassword("test");
         textMsgParam.setSMSContent(textContent);
 
-        Map<String, String> parameter = MapperUtil.objectToMap(textMsgParam);
+        Map<String, String> parameter = MapperUtil.convertToMap(textMsgParam);
         String response = HttpUtil.executeGet(UrlConstant.SEND_TEXT_MSG, null, parameter);
 
         TextMsgResult textMsgResult = new TextMsgResult();
