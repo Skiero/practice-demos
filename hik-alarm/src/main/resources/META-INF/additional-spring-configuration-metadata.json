@@ -1,0 +1,21 @@
+{
+  "properties": [
+    {
+      "name": "hik.config.service.name",
+      "type": "java.lang.String",
+      "description": "The name of the application."
+    },
+    {
+      "name": "hik.config.service.swagger",
+      "type": "java.lang.Boolean",
+      "description": "Enable flag for swagger.",
+      "defaultValue": false
+    },
+    {
+      "name": "hik.config.service.version",
+      "type": "java.lang.String",
+      "description": "Version number of the application.",
+      "defaultValue": "1.0.100"
+    }
+  ]
+}

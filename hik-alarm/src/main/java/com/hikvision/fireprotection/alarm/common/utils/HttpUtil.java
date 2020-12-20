@@ -184,7 +184,7 @@ public class HttpUtil {
         } finally {
             httpRequestBase.releaseConnection();
 
-            if (httpClient instanceof CloseableHttpClient) {
+            if (isHttps && httpClient != null) {
                 try {
                     ((CloseableHttpClient) httpClient).close();
                 } catch (IOException e) {

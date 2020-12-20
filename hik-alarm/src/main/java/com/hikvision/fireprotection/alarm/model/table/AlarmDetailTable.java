@@ -1,8 +1,6 @@
 package com.hikvision.fireprotection.alarm.model.table;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -36,8 +34,8 @@ public class AlarmDetailTable {
     private String contactName;
     /*** 手机号码 */
     private String contactPhone;
-    /*** 通知状态：0=未通知；1=已通知；2=通知失败 */
-    private char notifyStatus;
+    /*** 通知状态：1=已通知；2=未通知；3=通知失败 */
+    private Integer notifyStatus;
     /*** 通知时间 */
     private Date notifyTime;
     /*** 备注 */
@@ -45,7 +43,9 @@ public class AlarmDetailTable {
     /*** 通道名称 */
     private String sensorName;
     /*** 创建时间 */
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
     /*** 更新时间 */
+    @TableField(fill = FieldFill.UPDATE)
     private Date updateTime;
 }

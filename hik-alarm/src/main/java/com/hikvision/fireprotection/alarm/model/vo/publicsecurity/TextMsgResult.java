@@ -1,5 +1,7 @@
 package com.hikvision.fireprotection.alarm.model.vo.publicsecurity;
 
+import lombok.Data;
+
 /**
  * 短信发送响应
  *
@@ -7,6 +9,7 @@ package com.hikvision.fireprotection.alarm.model.vo.publicsecurity;
  * @date 2020/12/18 23:00
  * @since 1.0.100
  */
+@Data
 public class TextMsgResult {
     /*** 业务类别：01=发短信；02=已发送短信查询；03=查询回复 */
     private String bizType;

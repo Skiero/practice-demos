@@ -18,5 +18,5 @@ public interface AlarmService {
 
     PageData<AlarmDetailVO> queryAlarmDetailPage(AlarmPageQuery query);
 
-    void handleAlarmEvent(List<AlarmEventDTO> alarmDTOList);
+    void handleAlarmEvent(List<AlarmEventDTO> alarmEventDTOList);
 }

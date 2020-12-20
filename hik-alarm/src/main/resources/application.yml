@@ -4,7 +4,6 @@ hik:
       name: @name@
       swagger: true
       version: @version@
-
 mybatis-plus:
   global-config:
     banner: false
@@ -15,7 +14,8 @@ mybatis-plus:
 server:
   port: 7500
   servlet:
-    context-path: /@name@
+    context-path: /alarm
+#    context-path: /@name@
 
 spring:
   datasource:
@@ -23,6 +23,7 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/web_demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
     password: root
+    initialization-mode: always
     schema: classpath:sql/init.sql
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss

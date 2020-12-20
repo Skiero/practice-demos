@@ -2,7 +2,6 @@ package com.hikvision.fireprotection.alarm.model.request;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -31,8 +30,9 @@ public class AlarmPageQuery {
     private String contactName;
     /*** 手机号码 */
     private String contactPhone;
+    /*** 通知状态：1=已通知；2=未通知；3=通知失败 */
+    private Integer notifyStatus;
     /*** 报警起始时间 */
-    @DateTimeFormat()
     private Date startTime;
     /*** 报警结束时间 */
     private Date endTime;

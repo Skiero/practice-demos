@@ -40,17 +40,17 @@ public class MybatisPlusConfiguration {
         return new MetaObjectHandler() {
             @Override
             public void insertFill(MetaObject metaObject) {
-                Object createTime = getFieldValByName("create_time", metaObject);
+                Object createTime = getFieldValByName("createTime", metaObject);
                 if (createTime == null) {
-                    setFieldValByName("create_time", new Date(), metaObject);
+                    setFieldValByName("createTime", new Date(), metaObject);
                 }
             }
 
             @Override
             public void updateFill(MetaObject metaObject) {
-                Object updateTime = getFieldValByName("update_time", metaObject);
+                Object updateTime = getFieldValByName("updateTime", metaObject);
                 if (updateTime == null) {
-                    setFieldValByName("update_time", new Date(), metaObject);
+                    setFieldValByName("updateTime", new Date(), metaObject);
                 }
             }
         };
