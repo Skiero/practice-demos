@@ -22,16 +22,16 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * 报警控制层
+ * 短信控制层
  *
  * @author wangjinchang5
  * @date 2020/12/18 16:30
  * @since 1.0.100
  */
-@Api(tags = "报警模块")
+@Api(tags = "短信模块")
 @RestController
-@RequestMapping("/alarm/v1")
-public class AlarmController {
+@RequestMapping("/text_msg/v1")
+public class TextMessageController {
     @Resource
     private AlarmService alarmService;
 
