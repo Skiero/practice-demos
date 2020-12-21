@@ -10,7 +10,7 @@ create table if not exists tb_alarm_detail
     car_num        varchar(64)  not null comment '车牌号',
     contact_name   varchar(128) null comment '联系人',
     contact_phone  varchar(64)  null comment '手机号码',
-    notify_status  tinyint      not null comment '通知状态：0=未通知；1=已通知；2=通知失败',
+    notify_status  tinyint      not null comment '通知状态：1=已通知；2=未通知；3=通知失败',
     notify_time    timestamp    null comment '通知时间',
     remark         varchar(128) null comment '备注',
     sensor_name    varchar(128) null comment '通道名称',
