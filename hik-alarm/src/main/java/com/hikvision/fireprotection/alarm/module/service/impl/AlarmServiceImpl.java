@@ -106,9 +106,11 @@ public class AlarmServiceImpl implements AlarmService {
         } else {
             alarmDetailVOList = MapperUtil.mapperToList(AlarmDetailVO.class, records);
             alarmDetailVOList.forEach(vo -> {
-                vo.setNotifyStatus(NotifyStatus.getMsgByCode(Integer.valueOf(vo.getNotifyStatus())));
-                //todo
-                vo.setContactPhone(vo.getContactPhone().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2"));
+                String contactPhone = vo.getContactPhone();
+                if (contactPhone != null && contactPhone.matches(CommonConstant.MOBILE_REGEX)) {
+                    contactPhone = contactPhone.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+                }
+                vo.setContactPhone(contactPhone);
             });
         }
 
@@ -170,7 +172,7 @@ public class AlarmServiceImpl implements AlarmService {
             table.setNotifyTime(new Date());
             table.setRemark(textMsgResult.getComment());
 
-            table.setNotifyStatus(RandomUtils.nextInt(0, 3));
+            table.setNotifyStatus(RandomUtils.nextInt(1, 4));
             table.setNotifyTime(new Date());
 
             System.err.println("开始更新--" + System.currentTimeMillis());

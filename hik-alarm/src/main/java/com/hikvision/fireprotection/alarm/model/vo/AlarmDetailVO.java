@@ -34,7 +34,7 @@ public class AlarmDetailVO implements Serializable {
     /*** 手机号码 */
     private String contactPhone;
     /*** 通知状态 */
-    private String notifyStatus;
+    private Integer notifyStatus;
     /*** 通知时间 */
     private Date notifyTime;
     /*** 备注 */
