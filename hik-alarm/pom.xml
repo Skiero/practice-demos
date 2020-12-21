@@ -13,7 +13,7 @@
     <version>1.0.100</version>
     <packaging>war</packaging>
     <name>alarm</name>
-    <description>海康报警服务</description>
+    <description>告警服务</description>
 
     <properties>
         <commons-collections4.version>4.4</commons-collections4.version>
@@ -43,6 +43,13 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.6</version>
+        </dependency>
+
+        <!-- ftp -->
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.7.2</version>
         </dependency>
 
         <!-- swagger -->
