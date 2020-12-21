@@ -104,7 +104,7 @@ public class AlarmServiceImpl implements AlarmService {
         if (CollectionUtils.isEmpty(records)) {
             alarmDetailVOList = Collections.emptyList();
         } else {
-            alarmDetailVOList = MapperUtil.convertToList(AlarmDetailVO.class, records);
+            alarmDetailVOList = MapperUtil.mapperToList(AlarmDetailVO.class, records);
             alarmDetailVOList.forEach(vo -> {
                 vo.setNotifyStatus(NotifyStatus.getMsgByCode(Integer.valueOf(vo.getNotifyStatus())));
                 //todo
@@ -127,7 +127,7 @@ public class AlarmServiceImpl implements AlarmService {
         System.err.println("开始处理--" + System.currentTimeMillis());
 
         // 1 将报警事件入库
-        List<AlarmDetailTable> alarmDetailTables = MapperUtil.convertToList(AlarmDetailTable.class, alarmEventDTOList);
+        List<AlarmDetailTable> alarmDetailTables = MapperUtil.mapperToList(AlarmDetailTable.class, alarmEventDTOList);
 
         System.err.println("完成映射--" + System.currentTimeMillis());
 
@@ -199,7 +199,7 @@ public class AlarmServiceImpl implements AlarmService {
         textMsgParam.setPassword("test");
         textMsgParam.setSMSContent(textContent);
 
-        Map<String, String> parameter = MapperUtil.convertToMap(textMsgParam);
+        Map<String, String> parameter = MapperUtil.mapperToMap(textMsgParam);
         String response = HttpUtil.executeGet(UrlConstant.SEND_TEXT_MSG, null, parameter);
 
         TextMsgResult textMsgResult = new TextMsgResult();
