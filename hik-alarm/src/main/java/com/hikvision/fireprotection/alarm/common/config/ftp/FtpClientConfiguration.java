@@ -18,6 +18,7 @@ import java.net.InetAddress;
  *
  * @author wangjinchang5
  * @date 2020/12/21 15:00
+ * @see <a href="http://commons.apache.org/proper/commons-net/javadocs/api-1.4.1/org/apache/commons/net/ftp/FTPClient.html">FTPClient</a>
  * @since 1.0.100
  */
 @Configuration
@@ -82,6 +83,9 @@ public class FtpClientConfiguration {
         ftpClient.setRemoteVerificationEnabled(false);
         // 设置FTP控件连接使用的字符编码。某些FTP服务器要求以非ASCII编码（如UTF-8）发布命令，以便可以指定具有多字节字符表示形式（例如Big 8）的文件名。
         ftpClient.setControlEncoding(ftpClientProperties.getEncoding());
+        // 更改FTP会话的当前工作目录。
+        ftpClient.changeWorkingDirectory(ftpClientProperties.getPathname());
+
         return ftpClient;
     }
 }
