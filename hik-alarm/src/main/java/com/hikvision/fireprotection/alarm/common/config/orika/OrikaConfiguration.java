@@ -2,6 +2,7 @@ package com.hikvision.fireprotection.alarm.common.config.orika;
 
 import ma.glasnost.orika.MapperFacade;
 import ma.glasnost.orika.MapperFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 public class OrikaConfiguration {
     public static MapperFactory mapperFactory;
 
+    @Autowired
     public void setMapperFactory(MapperFactory mapperFactory) {
         OrikaConfiguration.mapperFactory = mapperFactory;
     }
