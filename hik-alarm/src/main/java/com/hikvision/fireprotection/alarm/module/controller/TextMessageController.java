@@ -52,6 +52,6 @@ public class TextMessageController {
         alarmEventDTO.setAlarmTime(new Date());
         alarmEventDTO.setAlarmType("通道占用");
         alarmEventDTO.setCarNum("浙A" + RandomUtils.nextInt(10000, 99999));
-        alarmService.handleAlarmEvent(Collections.singletonList(alarmEventDTO));
+        alarmService.processAlarmEvent(Collections.singletonList(alarmEventDTO));
     }
 }

@@ -1,8 +1,17 @@
 hik:
   config:
+    ftp:
+      hostname: 10.23.3.60
+      password: xf12345+
+      pathname: /hik/fireProtection/alarm/
+      port: 21
+      username: vsftpd
     service:
       name: @name@
       version: @version@
+  schedule:
+    poll_ftp:
+      cron: 0/5 * * * * ?
 
 mybatis-plus:
   global-config:
