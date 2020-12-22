@@ -29,4 +29,6 @@ public class AlarmEventDTO implements Serializable {
     private String carNum;
     /*** 通道名称 */
     private String sensorName;
+    /*** 文件路径（FTP的绝对路径） */
+    private String filePath;
 }

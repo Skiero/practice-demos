@@ -9,6 +9,7 @@ import lombok.Data;
  * @date 2020/12/20 16:00
  * @since 1.0.100
  */
+@SuppressWarnings("AlibabaLowerCamelCaseVariableNaming")
 @Data
 public class TextMsgParam {
     /*** 业务类别：01=发短信；02=已发送短信查询；03=查询回复 */

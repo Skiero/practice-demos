@@ -3,8 +3,8 @@ package com.hikvision.fireprotection.alarm.module.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.hikvision.fireprotection.alarm.common.config.param.PersonalInfo;
-import com.hikvision.fireprotection.alarm.common.config.param.ValidateInfo;
+import com.hikvision.fireprotection.alarm.model.request.publicsecurity.param.PersonalInfo;
+import com.hikvision.fireprotection.alarm.model.request.publicsecurity.param.ValidateInfo;
 import com.hikvision.fireprotection.alarm.common.constant.CommonConstant;
 import com.hikvision.fireprotection.alarm.common.constant.UrlConstant;
 import com.hikvision.fireprotection.alarm.common.enums.BusinessExceptionEnum;
@@ -36,6 +36,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 /**
  * 报警服务
@@ -121,47 +124,43 @@ public class AlarmServiceImpl implements AlarmService {
     }
 
     @Override
-    public void handleAlarmEvent(List<AlarmEventDTO> alarmEventDTOList) {
+    public Set<String> processAlarmEvent(List<AlarmEventDTO> alarmEventDTOList) {
         if (CollectionUtils.isEmpty(alarmEventDTOList)) {
-            return;
+            return Collections.emptySet();
         }
 
-        System.err.println("开始处理--" + System.currentTimeMillis());
-
-        // 1 将报警事件入库
+        // 1 事件入库
         List<AlarmDetailTable> alarmDetailTables = MapperUtil.mapperToList(AlarmDetailTable.class, alarmEventDTOList);
-
-        System.err.println("完成映射--" + System.currentTimeMillis());
 
         alarmDetailTables.forEach(table -> {
             table.setNotifyStatus(NotifyStatus.NOT_NOTIFIED.code);
             alarmDetailMapper.insert(table);
         });
-        // 2 阅后即焚
-        // TODO
 
-        System.err.println("完成入库--" + System.currentTimeMillis());
+        // 2 异步处理
+        CompletableFuture.runAsync(() -> this.asyncProcessingAlarmEvent(alarmDetailTables));
 
+        return alarmEventDTOList.stream().map(AlarmEventDTO::getFilePath).collect(Collectors.toSet());
+    }
+
+    private void asyncProcessingAlarmEvent(List<AlarmDetailTable> alarmDetailTables) {
+        log.debug("开始处理  -->");
         // 3 处理事件
         alarmDetailTables.forEach(table -> {
             // 3.1 查询联系人
 
-            System.err.println("查询信息--" + System.currentTimeMillis());
+//            CarNumResult carNumResult = queryContactInformation(table.getCarNum());
 
-            CarNumResult carNumResult = queryContactInformation(table.getCarNum());
-
-            System.err.println("查询结束--" + System.currentTimeMillis());
-
+            String s = HttpUtil.executeGet("https://www.baidu.com/", null);
+            log.debug("请求成功  -- > {}", s.length());
 
             table.setContactName("hik-" + RandomUtils.nextInt(1000, 9999));
             table.setContactPhone(RandomUtils.nextLong(15000000000L, 18999999999L) + "");
 
-            System.err.println("发送短信--" + System.currentTimeMillis());
-
             // 3.2 发送短信
             TextMsgResult textMsgResult = sendTextMessage(table.getContactPhone(), "测试短信");
+            log.info("发送短信  -->");
 
-            System.err.println("发送结束--" + System.currentTimeMillis());
             if (CommonConstant.SUCCESS_CODE.equals(textMsgResult.getResponseCode())) {
                 // 发送成功
                 table.setNotifyStatus(NotifyStatus.ALREADY_NOTIFIED.code);
@@ -172,15 +171,15 @@ public class AlarmServiceImpl implements AlarmService {
             table.setNotifyTime(new Date());
             table.setRemark(textMsgResult.getComment());
 
+            log.warn("发送完成 --> {}", textMsgResult.getResponseCode());
             table.setNotifyStatus(RandomUtils.nextInt(1, 4));
             table.setNotifyTime(new Date());
 
-            System.err.println("开始更新--" + System.currentTimeMillis());
             // 3.3 更新短信通知状态
             alarmDetailMapper.updateById(table);
-        });
 
-        System.err.println("一切结束--" + System.currentTimeMillis());
+            log.error("更新完成 --> ");
+        });
     }
 
     private CarNumResult queryContactInformation(String carNum) {

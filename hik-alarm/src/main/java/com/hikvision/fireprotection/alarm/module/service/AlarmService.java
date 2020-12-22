@@ -6,6 +6,7 @@ import com.hikvision.fireprotection.alarm.model.vo.AlarmDetailVO;
 import com.hikvision.fireprotection.alarm.model.vo.PageData;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 报警服务
@@ -16,7 +17,19 @@ import java.util.List;
  */
 public interface AlarmService {
 
+    /**
+     * 分页查询报警详情
+     *
+     * @param query 查询条件
+     * @return 分页信息
+     */
     PageData<AlarmDetailVO> queryAlarmDetailPage(AlarmPageQuery query);
 
-    void handleAlarmEvent(List<AlarmEventDTO> alarmEventDTOList);
+    /**
+     * 处理报警事件
+     *
+     * @param alarmEventDTOList 报警事件列表
+     * @return 以保存的报警事件的文件路径
+     */
+    Set<String> processAlarmEvent(List<AlarmEventDTO> alarmEventDTOList);
 }

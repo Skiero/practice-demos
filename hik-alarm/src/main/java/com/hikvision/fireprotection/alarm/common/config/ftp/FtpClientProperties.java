@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * FtpClientProperties
  *
  * @author wangjinchang5
- * @date 2020/12/21 15:36
+ * @date 2020/12/21 15:00
  * @since 1.0.100
  */
 @ConfigurationProperties(prefix = "hik.config.ftp")
@@ -19,7 +19,7 @@ public class FtpClientProperties {
     private String hostname;
     /*** 登录密码 */
     private String password;
-    /*** 文件路径 */
+    /*** 工作目录 */
     private String pathname;
     /*** 端口 */
     private Integer port;

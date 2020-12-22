@@ -42,7 +42,7 @@ public class TextMessageController {
         return ServerResponse.success(page);
     }
 
-    @ApiOperation(value = "模拟触发报警报警")
+    @ApiOperation(value = "模拟触发报警")
     @GetMapping("/alarm_mock")
     public void mockAlarm() {
         AlarmEventDTO alarmEventDTO = new AlarmEventDTO();

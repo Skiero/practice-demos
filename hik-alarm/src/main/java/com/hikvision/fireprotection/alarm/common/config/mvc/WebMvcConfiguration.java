@@ -2,7 +2,6 @@ package com.hikvision.fireprotection.alarm.common.config.mvc;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -25,14 +24,6 @@ public class WebMvcConfiguration {
                         "classpath:/META-INF/resources/");
                 registry.addResourceHandler("/webjars/**").addResourceLocations(
                         "classpath:/META-INF/resources/webjars/");
-            }
-
-            @Override
-            public void addCorsMappings(@SuppressWarnings("NullableProblems") CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowCredentials(true)
-                        .allowedMethods("GET", "POST", "DELETE", "PUT", "OPTIONS")
-                        .maxAge(3600);
             }
         };
     }

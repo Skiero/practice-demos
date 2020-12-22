@@ -1,7 +1,7 @@
 package com.hikvision.fireprotection.alarm.model.request.publicsecurity;
 
-import com.hikvision.fireprotection.alarm.common.config.param.PersonalInfo;
-import com.hikvision.fireprotection.alarm.common.config.param.ValidateInfo;
+import com.hikvision.fireprotection.alarm.model.request.publicsecurity.param.PersonalInfo;
+import com.hikvision.fireprotection.alarm.model.request.publicsecurity.param.ValidateInfo;
 import lombok.Data;
 
 import java.util.List;

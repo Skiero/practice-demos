@@ -6,6 +6,7 @@ import org.apache.commons.net.ftp.FTPReply;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +37,7 @@ public class FtpClientConfiguration {
 
     @Bean(destroyMethod = "disconnect")
     @ConditionalOnMissingBean(FTPClient.class)
+    @ConditionalOnProperty(prefix = "hik.config.ftp", name = "enable", havingValue = "true")
     public FTPClient ftpClient() throws IOException {
         String hostname = ftpClientProperties.getHostname();
         Integer port = ftpClientProperties.getPort();

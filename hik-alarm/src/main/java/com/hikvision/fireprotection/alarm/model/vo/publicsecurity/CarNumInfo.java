@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2020/12/18 23:00
  * @since 1.0.100
  */
-@SuppressWarnings("SpellCheckingInspection")
+@SuppressWarnings({"SpellCheckingInspection", "AlibabaLowerCamelCaseVariableNaming"})
 @Data
 public class CarNumInfo {
     /*** 号牌种类 */

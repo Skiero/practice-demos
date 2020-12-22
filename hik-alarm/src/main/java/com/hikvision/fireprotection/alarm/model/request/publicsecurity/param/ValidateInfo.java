@@ -1,4 +1,4 @@
-package com.hikvision.fireprotection.alarm.common.config.param;
+package com.hikvision.fireprotection.alarm.model.request.publicsecurity.param;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2020/12/20 16:00
  * @since 1.0.100
  */
+@SuppressWarnings("SpellCheckingInspection")
 @ConfigurationProperties(prefix = "validate")
 @Data
 public class ValidateInfo {

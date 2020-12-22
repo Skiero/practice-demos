@@ -9,6 +9,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -22,15 +25,31 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ExceptionHandleConfiguration {
 
+    @ExceptionHandler
+    public ServerResponse<?> handle(ConstraintViolationException e) {
+        log.error("The global exception handler caught a get method valid exception.", e);
+        ServerResponse<?> serverResponse = ServerResponse.error(BusinessExceptionEnum.INVALID_PARAMETER);
+
+        Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+        if (violations != null && !violations.isEmpty()) {
+            String message = violations.iterator().next().getMessage();
+            serverResponse.setMsg(message);
+        }
+
+        return serverResponse;
+    }
+
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ServerResponse<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        log.error("The global exception handler caught a valid exception.", e);
+        log.error("The global exception handler caught a post method valid exception.", e);
+        ServerResponse<?> serverResponse = new ServerResponse<>();
+
         String defaultMessage = e.getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining(","));
-        ServerResponse<?> serverResponse = new ServerResponse<>();
         serverResponse.setCode(BusinessExceptionEnum.INVALID_PARAMETER.getCode());
         serverResponse.setMsg(defaultMessage);
+
         return serverResponse;
     }
 

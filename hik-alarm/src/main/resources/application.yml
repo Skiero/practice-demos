@@ -1,6 +1,7 @@
 hik:
   config:
     ftp:
+      enable: true
       hostname: 10.23.3.60
       password: xf12345+
       pathname: /hik/fireProtection/alarm/
@@ -38,4 +39,4 @@ spring:
     locale: zh_CN
     time-zone: GMT+8
   profiles:
-    active: dev
+    active: pro
