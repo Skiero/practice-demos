@@ -20,7 +20,7 @@ import com.hikvision.fireprotection.alarm.model.vo.PageData;
 import com.hikvision.fireprotection.alarm.model.vo.publicsecurity.CarNumResult;
 import com.hikvision.fireprotection.alarm.model.request.publicsecurity.TextMsgParam;
 import com.hikvision.fireprotection.alarm.model.vo.publicsecurity.TextMsgResult;
-import com.hikvision.fireprotection.alarm.module.mapper.AlarmDetailMapper;
+import com.hikvision.fireprotection.alarm.module.dao.AlarmDetailMapper;
 import com.hikvision.fireprotection.alarm.module.service.AlarmService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;

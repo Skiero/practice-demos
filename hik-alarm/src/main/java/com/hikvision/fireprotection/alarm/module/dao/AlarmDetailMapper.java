@@ -1,4 +1,4 @@
-package com.hikvision.fireprotection.alarm.module.mapper;
+package com.hikvision.fireprotection.alarm.module.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.hikvision.fireprotection.alarm.model.table.AlarmDetailTable;

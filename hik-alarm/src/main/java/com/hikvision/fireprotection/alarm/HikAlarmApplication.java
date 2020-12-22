@@ -13,7 +13,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @since 1.0.100
  */
 @SpringBootApplication
-@MapperScan("com/hikvision/fireprotection/alarm/module/mapper")
+@MapperScan("com/hikvision/fireprotection/alarm/module/dao")
 @EnableAsync
 @EnableScheduling
 @EnableAspectJAutoProxy
