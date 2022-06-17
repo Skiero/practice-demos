@@ -17,7 +17,7 @@
 
     <properties>
         <commons-collections4.version>4.4</commons-collections4.version>
-        <fastjson.version>1.2.60</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <java.version>1.8</java.version>
         <mybatis.version>3.3.1</mybatis.version>
         <swagger.version>2.9.2</swagger.version>
