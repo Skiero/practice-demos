@@ -1,4 +1,0 @@
-hik:
-  config:
-    service:
-      swagger: true
